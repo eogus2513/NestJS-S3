@@ -11,23 +11,22 @@ export class ImageService {
   ) {}
 
   public async uploadFile(images) {
+    const uploadImages = [];
+    for (const element of images) {
+      const file = new UploadImage();
+      file.originalName = element.originalname;
+      file.encoding = element.encoding;
+      file.mimeType = element.mimetype;
+      file.size = element.size;
+      file.url = element.location;
+
+      uploadImages.push(file);
+    }
     try {
-      const uploadImages = [];
-      for (const element of images) {
-        const file = new UploadImage();
-        file.originalName = element.originalname;
-        file.encoding = element.encoding;
-        file.mimeType = element.mimetype;
-        file.size = element.size;
-        file.url = element.location;
-
-        uploadImages.push(file);
-      }
-
       await this.uploadImageRepository.save(uploadImages);
       return 'Image Upload Success';
-    } catch (error) {
-      throw new BadRequestException(error.message);
+    } catch (e) {
+      throw new BadRequestException(e.message);
     }
   }
 }
