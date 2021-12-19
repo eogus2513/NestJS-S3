@@ -23,8 +23,8 @@ export class ImageController {
         s3: s3,
         bucket: process.env.AWS_BUCKET_NAME,
         acl: 'private',
-        key: function (request, file, callback) {
-          callback(null, `${Date.now().toString()}_${file.originalname}`);
+        key: function (request, image, callback) {
+          callback(null, `${Date.now().toString()}_${image.originalname}`);
         },
       }),
       limits: {},
