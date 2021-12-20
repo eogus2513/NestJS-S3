@@ -1,4 +1,11 @@
-import { Controller, Post, Request, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Request,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ImageService } from './image.service';
 import * as AWS from 'aws-sdk';
 import * as multerS3 from 'multer-s3';
@@ -15,6 +22,16 @@ AWS.config.update({
 @Controller('image')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
+
+  @Get()
+  public async getAllImage() {
+    return await this.imageService.getAllImage();
+  }
+
+  @Get('/:id')
+  public async getImage(@Param('id') param) {
+    return await this.imageService.getImage(param);
+  }
 
   @Post()
   @UseInterceptors(
