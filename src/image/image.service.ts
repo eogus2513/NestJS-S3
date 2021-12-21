@@ -30,22 +30,38 @@ export class ImageService {
   }
 
   public async uploadFile(images) {
-    const uploadImages = [];
-    for (const element of images) {
-      const file = new UploadImage();
-      file.originalName = element.originalname;
-      file.encoding = element.encoding;
-      file.mimeType = element.mimetype;
-      file.size = element.size;
-      file.url = element.location;
-
-      uploadImages.push(file);
-    }
+    const uploadImages = await Promise.all(
+      images.map(async (element) => {
+        const file = new UploadImage();
+        file.originalName = element.originalname;
+        file.encoding = element.encoding;
+        file.mimeType = element.mimetype;
+        file.size = element.size;
+        file.url = element.location;
+        return file;
+      }),
+    );
     try {
       await this.uploadImageRepository.save(uploadImages);
-      return 'Image Upload Success';
+      return { status: 201, message: 'success' };
     } catch (e) {
       throw new BadRequestException(e.message);
     }
   }
 }
+
+//map과 차이점 알기!
+/*
+ const uploadImages = [];
+ 
+ for (const element of images) {
+   const file = new UploadImage();
+   file.originalName = element.originalname;
+   file.encoding = element.encoding;
+   file.mimeType = element.mimetype;
+   file.size = element.size;
+   file.url = element.location;
+
+   uploadImages.push(file);
+ }
+ */
