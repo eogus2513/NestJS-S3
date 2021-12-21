@@ -3,7 +3,7 @@ import {
   Get,
   Param,
   Post,
-  Request,
+  UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { ImageService } from './image.service';
@@ -47,7 +47,7 @@ export class ImageController {
       limits: {},
     }),
   )
-  async uploadImage(@Request() request) {
-    return this.imageService.uploadFile(request.files);
+  async uploadImage(@UploadedFiles() images: Express.Multer.File[]) {
+    return this.imageService.uploadFile(images);
   }
 }
