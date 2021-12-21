@@ -2,7 +2,7 @@ name: NestJS-S3 CD
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   CD:
@@ -35,4 +35,4 @@ jobs:
       - run: docker build -t eogus2513/image:latest .
       
       - name: docker push
-      - run: docker push eogus2513/image
+      - run: docker push eogus2513/image:latest
