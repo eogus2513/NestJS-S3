@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ImageModule } from '../image/image.module';
 import { TypeormConfigModule } from '../typeorm/typeorm-config.module';
+import { AwsModule } from '../aws/aws.module';
 
 @Module({
-  imports: [ImageModule, TypeormConfigModule],
+  imports: [TypeormConfigModule, AwsModule],
   controllers: [AppController],
   providers: [AppService],
 })
