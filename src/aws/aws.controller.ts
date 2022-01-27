@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   Post,
   UploadedFile,
@@ -16,6 +17,11 @@ import * as AWS from 'aws-sdk';
 export class AwsController {
   constructor(private readonly awsService: AwsService) {}
 
+  @Get()
+  public getImageUrl(@Body('key') key: string): string {
+    return this.awsService.getAwsS3FileUrl(key);
+  }
+
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   public async uploadImage(@UploadedFile() file: Express.Multer.File): Promise<{
@@ -27,7 +33,7 @@ export class AwsController {
 
   @HttpCode(204)
   @Delete()
-  public async deleteImage(@Body('key') key: string): Promise<void> {
-    await this.awsService.deleteS3Object(key);
+  public async deleteImage(@Body('key') objectKey: string): Promise<void> {
+    await this.awsService.deleteS3Object(objectKey);
   }
 }

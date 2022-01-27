@@ -41,7 +41,7 @@ export class AwsService {
         .promise();
       return { key, s3Object };
     } catch (error) {
-      throw new BadRequestException(`File upload failed : ${error}`);
+      throw new BadRequestException(`Image upload failed : ${error}`);
     }
   }
 
@@ -60,11 +60,11 @@ export class AwsService {
         )
         .promise();
     } catch (error) {
-      throw new BadRequestException(`Failed to delete file : ${error}`);
+      throw new BadRequestException(`Failed to delete Image : ${error}`);
     }
   }
 
-  private getAwsS3FileUrl(objectKey: string): string {
+  public getAwsS3FileUrl(objectKey: string): string {
     return `https://${this.AWS_BUCKET_NAME}.s3.amazonaws.com/${objectKey}`;
   }
 }
