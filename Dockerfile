@@ -1,10 +1,15 @@
-FROM node:17-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 
-COPY . .
+COPY package.json tsconfig.build.json tsconfig.json ./
 
 RUN yarn
+
+COPY src .
+
 RUN yarn build
+
+EXPOSE 3000
 
 CMD ["yarn", "start:prod"]
